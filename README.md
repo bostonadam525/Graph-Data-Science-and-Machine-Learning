@@ -95,3 +95,102 @@
       * **Closeness**
       * **Degree**
 3. **Pathfinding**
+   * Search graph starting at 1 node of interest and search all adjacent nodes until final destination.
+   * Goal is to find the **cheapest route**.
+   * Most similar to the **shortest path problem** --> what is the shortest path to travel?
+   * Two most common algorithms:
+     * **Dijkstra's**
+       * Shortest path between nodes in weighted graph.
+     * **A***
+       * Weighted version of Dijkstras.
+      
+
+ # Real-World Use Cases of Graph Analytics
+ 1. Google --> PageRank for similarity search
+ 2. Facebook --> Community Detection
+ 3. Amazon --> Collaborative Filtering for recommendations
+ 4. Pinterest --> Random Walks + Graph ML for recommendations
+ 5. Uber Eats --> Graph ML for recommendations
+
+
+## Social Networks
+* Most common use case of Graph Analytics/Network Analysis
+* Below is an example of the Louvain Algorithm from this recent paper: [Comparative Analysis of Community Detection Algorithms on the SNAP Social Circles Dataset](https://arxiv.org/html/2502.04341v1)
+  * github from the paper: [Comparative Analysis of Community Detection Algorithms](https://github.com/YashM246/Comparative_Analysis_of_Community_Detection_Algorithm)
+  * [Stanford SNAP Large Network Datasets](https://snap.stanford.edu/data/index.html)
+
+![image](https://github.com/user-attachments/assets/cc964a5e-4cda-4801-9004-c0aae85ec0f2)
+
+
+## Recommendation Engines
+* Example of link prediction from [AWS](https://aws.amazon.com/blogs/machine-learning/graph-based-recommendation-system-with-neptune-ml-an-illustration-on-social-network-link-prediction-challenges/)
+
+![image](https://github.com/user-attachments/assets/4c947be1-4701-4028-9a0f-9307ebe16ab3)
+
+
+## Other Examples
+* Fraud Detection
+* Supply Chains
+* Patient and Disease networks
+
+# Graph Analytics Tools
+* This is a great diagram from Memgraph of all the Tools available for Graph Analytics.
+* NetworkX is the most popular Python tool. 
+
+![image](https://github.com/user-attachments/assets/879c865a-b6bb-45fd-a7df-d60563a720bb)
+
+
+## NetworkX
+* Great for getting quick analysis on graphs and networks.
+* Supports multiple data formats.
+* Data structure analysis for:
+  * graphs
+  * digraphs
+  * multigraphs
+  * multidigraphs
+  * standard graph algorithms
+ 
+* Example of all types from [Memgraph](https://memgraph.github.io/networkx-guide/basics/):
+
+![image](https://github.com/user-attachments/assets/81c191b2-f62d-4639-af4a-39d19bd491ed)
+
+
+### Reading Graphs
+* Data can be imported from multiple data types including:
+1. Adjacency list
+2. Multiline adjacency list
+3. Edge list
+4. GEXF
+5. GML
+6. Pickle
+7. GraphML
+8. JSON
+9. LEDA
+10. SparseGraph6
+11. Pajek
+12. GIS Shapefile
+13. Matrix Market
+14. CSV
+
+* Example code:
+```
+graph_type = nx.Graph()
+df = pd.read_csv('graph.csv')
+G = nx.from_pandas_edgelist(df, create_using=graph_type)
+```
+
+### Add Nodes and Edges
+* hashable Python objects to add new nodes and edges to NetworkX.
+
+### Graph Algorithms in NetworkX
+1. Community detection (e.g. Girvan-Newma, Fluid communities, Label Prop)
+2. Traversals (e.g. BFS, DFS)
+3. Pathfinding (e.g. Dijkstra, A* search)
+4. Connected components (e.g. Weakly connected components, Strongly connected)
+5. Centrality (e.g. Degree centrality, Closeness, Betweenness, Katz, PageRank)
+
+### Graph Drawing
+* Basic drawing with Matplotlib and interfae for Graphviz.
+
+### Writing/Exporting Graphs
+* Can export graphs in many formats including JSON and Adjacency Lists. 
