@@ -430,6 +430,158 @@ Source: Same as above
 * Roles allow us to identify different properties of nodes in network. Here we will introduce an automatic structural roles discovery method called RolX. It’s an unsupervised learning approach without prior knowledge.
 * [More about RoIX here](https://snap-stanford.github.io/cs224w-notes/preliminaries/motifs-and-structral-roles_lecture)
 
+---
+# Link-Level Prediction Tasks
+* Predict **new links** between existing network links.
+* How this is done:
+    1) All node pairs with no existing links are ranked.
+    2) Top K node pairs are predicted
+ 
+* Key: Design features for a pair of nodes
+
+
+## Link-Prediction Task: 2 main methods
+1. Links missing at random
+   * Randomly remove sets of network links --> goal is then to predict them.
+
+2. Links over **time**
+   * Given `G[to, t'o]` graph on edges up to time `to'`
+   * Goal: Output ranked liks `L` of links that are not in the given graph.
+
+### Biological Networks over time - Real-World use case
+* Link prediction in biological networks aims to identify potential or missing interactions between biological entities (like proteins, genes, or diseases) by analyzing existing network data.
+* When considering time-varying biological networks, link prediction becomes a task of predicting future interactions based on past and present connections.
+* This involves analyzing the dynamics of the network to uncover patterns that can be used to forecast future relationships.
+* As an example, a paper by Aziz et al. in 2021 [Multimorbidity prediction using link prediction](https://pmc.ncbi.nlm.nih.gov/articles/PMC8360941/#:~:text=Predicting%20the%20likelihood%20of%20a,Recall%2C%20and%20F%2DScore.), the authors used a network-based approach to analyze multimorbidity data and develop methods for predicting diseases that a patient is likely to develop. 
+
+
+## Link Prediction via Proximity
+* Methods:
+  * Given a pair of nodes `(x,y)`, we will compute score `c(x,y)`.
+  * `c(x,y)` could be the number of most common neighbors to nodex `(x,y)`
+  * We then sort node pairs `(x,y)` in decreasing order by their common neighbors `c(x,y)`
+* Goal:
+  * **Predict the top `n` pairs of nodes as NEW LINKS**.
+  * Analyze which of these links **actually appear** in `G[t1,t1']` the new temporal graph nodes.
+ 
+## Link-Level Features - 3 Main Types
+1. **Distance-based features**
+   * Shortest-path distance between 2 nodes.
+   * **Problem: this metric DOES NOT capture the degree of overlap between common or nearest neighborhoods.** 
+2. **Local neighborhood overlap**
+   * Analyze the number of neighboring nodes that are shared between 2 nodes `v1` and `v2`.
+   * These are the methods:
+     * **Common neighbors**
+     * **Jaccard's Coefficient**
+     * **Adamic-Adar index** --> this actually works better than the 2 previous methods.
+     * **Problem: Becomes zero when no neighbor nodes are shared or there are nodes that are more than 2 hops apart from one another.**
+3. **Global neighborhood overlap**
+   * Local neighborhood overlap features have significant limitations:
+     1) If 2 nodes **do not have any common neighbors, metric is ALWAYS ZERO.**
+     2) If 2 nodes to not have any common neighbors, it does not mean they won't overlap or be connected in the future.
+   * **Global overlap** resolves the local neighbor problem by utilizing the **entire graph**.
+
+### Global Neighborhood Overlap Metrics
+* **Katz index**
+  * Number of paths of all lengths between a given pair of nodes is counted.
+  * How do we calculate the number of paths and their lengths between 2 nodes?
+    * **Graph Adjacency Matrix!!!**
+
+* **Computing number of paths between 2 nodes**
+  * The simple intuitive explanation is that if there is a path we input the value 1, if there is no path we input the value 0.
+  * See this slide from Professor Jure Leskovec's lecture:
+
+![image](https://github.com/user-attachments/assets/eef3d1fe-787c-4e2f-947e-7a3e187c93a0)
+
+* **How to compute number of paths for 2 given nodes?**
+  1) Compute num of paths of length 1 between each of node `u` neighbor and `v`
+  2) Add these paths across `u` neighbors
+ * We can see this again from Professor Jure Leskovec's lecture, [source](https://snap.stanford.edu/class/cs224w-2021/slides/02-tradition-ml.pdf)
+
+![image](https://github.com/user-attachments/assets/08c1ad36-4780-4bd7-a402-ba65111b009e)
+
+* How do we do this for ALL possible paths?
+  * use adjacency matrix powers
+  * Possible paths goes from 1 to infinity!
+ 
+
+---
+# Graph-Level Prediction Tasks
+* Goal: To find features that give us the characteristics of an **ENTIRE GRAPH**
+* **Kernel methods**
+  * These are commonly used for machine learning graph-level prediction tasks **instead of feature vectors.**
+  * **A Kernel matrix measures similarity between two graphs.**
+* There are 2 common Graph Kernels:
+  1) **Graphlet Kernel**
+  2) **Weisfeiler-Lehman Kernel**
+
+* Other less common kernels:
+  * Random-walk kernel
+  * Shortest-path graph kernel
+  * ...others...
+ 
+## Graph Kernel Concept
+* Goal: Design graph feature vectors
+* [GraKeL](https://github.com/ysig/GraKeL?tab=readme-ov-file) is a sklearn implementation of many Graph kernel methods. 
+* Idea: **Bag-of-Words (BoW)**
+  * BoW intuition:
+    * **BoW counts the number of occurrences of words in a document without order.** 
+    * Nodes as words --> naive extension to graphs.
+    * Both graphs have 4 red nodes --> same feature vector for 2 different graphs.
+    * From Professor Jure Leskovec's lecture:
+   
+![image](https://github.com/user-attachments/assets/56f6d077-1b9a-4509-8b58-fcd089f01d97)
+
+* **Bag of node degrees**
+  * Deg1, Deg2, Deg3
+  * Both the Graphlet kernel and Weisfeiler-Lehman kernel use `Bag-of-*`
+
+### 1. Graphlet Kernel Features
+* Count number of **different graphlets** in a graph.
+* Graphlets here is NOT the same as **node-level features**, the differences are:
+  1) Graphlet nodes **DO NOT NEED TO BE CONNECTED** -- allows for isolated nodes.
+  2) Graphlets are **NOT ROOTED**.
+* Example from Professor Jure Leskovec's lecture:
+  * Notice that for k=3 you have 4 graphlets
+  * This is because you can have 3, 2, 1, 0 connections.
+
+![image](https://github.com/user-attachments/assets/f9f084f5-6b6b-4638-b72f-a5b6e6e32227)
+
+#### Limitation of Graphlet kernels
+* If you count size-k graphlets for a graph with size `n` this takes a long time and is exponential in a graph.
+
+### 2. Weisfeiler-Lehman Graph Kernel
+* MORE efficient graph kernel!
+* Concept
+  * Using graph neighborhood structure to iterate and enrich node vocab.
+  * Generalizes the Bag-of-node degrees because node degrees are 1 hop neighborhoods.
+  * Algorithm: **Color Refinement**
+ 
+#### Color Refinement Algorithm
+* Given graph `G` with nodes `V`
+  * Assign initial color to each node.
+  * Refine node colors iteratively using HASH maps of various colors.
+  * **After K steps of refinement, summarize structure of k-hop neighborhood.**
+* WL kernel is **more computationally efficient** due to neighborhood aggregation.
+  * Total time complexity is linear in number of edges.
+* Example from Professor Jure Leskovec's lecture, given 2 similar graphs:
+  * 2 graphs that are similar but slightly different.
+  * Iterate and aggregate neighboring colors into HASH table.
+  * [Source below](https://snap.stanford.edu/class/cs224w-2021/slides/02-tradition-ml.pdf)
+
+![image](https://github.com/user-attachments/assets/059ab2c3-e115-42d1-8246-ac8f642a1da1)
+
+![image](https://github.com/user-attachments/assets/5a8eb6ec-90e2-45a7-bca8-5c3212083d05)
+
+![image](https://github.com/user-attachments/assets/39f3f6eb-7235-4df0-93cd-6457fa2d9c49)
+
+![image](https://github.com/user-attachments/assets/2bb89c51-f10b-4301-a028-9fb3074ff2ee)
+
+![image](https://github.com/user-attachments/assets/c9a0f884-9790-4608-8ab9-660a5b4bdc5d)
+
+![image](https://github.com/user-attachments/assets/27bcf567-d6ee-45ad-b5ea-0a7ba2132560)
+
+
 
 
 ---
