@@ -740,6 +740,22 @@ features to labels.
 
 ![image](https://github.com/user-attachments/assets/805a2886-e4e5-4d2c-8f36-b9beac6e1f63)
 
+# Which Node Embedding method(s) should you use?
+* Just as with any embedding model or technique, there is "no one size fits all" approach.
+* For example, node2vec can perform better on node classification tasks and other graph embedding techniques may perform better on link prediction and other algorithms.
+* **Random Walk approaches are usually more efficient because you can define a small subset of walks to sample, but random walks generally don't scale to large networks as well as other methods.** 
+* Generally speaking you choose the algorithmic approach that best fits your data and goals of your application.
+* There are various papers on this subject including:
+  1. Wu et al, 2023. [A Survey on Graph Embedding Techniques for Biomedical Data: Methods and Applications](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4374504)
+  2. Goyal et al, 2019. [Benchmarks for Graph Embedding Evaluation](https://arxiv.org/abs/1908.06543)
+  3. Madushanka et al. 2024. [Negative Sampling in Knowledge Graph Representation Learning: A Review](https://arxiv.org/html/2402.19195v2)
+
+## Biomedical Applications of Embedding Methods
+* The paper by Wu et al. in 2023 break this down in to homogenous, heterogenous, and dynamic graph based methods as seen below in Figure 4.
+
+![image](https://github.com/user-attachments/assets/ae5db481-149a-4a68-a6d5-83b5d0d4baa9)
+
+
 ---
 # References
 1. [Stanford CS224W: ML with Graphs | 2021](https://www.youtube.com/watch?v=4dVwlE9jYxY&list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn&index=5)
