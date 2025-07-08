@@ -581,8 +581,164 @@ Source: Same as above
 
 ![image](https://github.com/user-attachments/assets/27bcf567-d6ee-45ad-b5ea-0a7ba2132560)
 
+---
+# Node Embeddings
+* Traditional machine learning on graphs usually consists of:
+  1. Given an input graph
+  2. extract node --> link --> graph-level features
+  3. learn a model (e.g. SVM, neural network, etc.) that maps
+features to labels.
+
+* **Graph Representation Learning** removes the need for manual feature engineering to extract the structured features.
+  * **Representation Learning automatically learns the features of a graph**
+
+## Goal of Graph Representation Learning?
+* Perform efficient task-independent feature learning.
+* This image from [Stanford Professor Jure Leskovec's lecture on Node Embeddings](https://snap.stanford.edu/class/cs224w-2021/slides/03-nodeemb.pdf) demonstrates this task below. You are taking a node --> learning a function --> representing this as vector embeddings.
+* The resulting vectors should capture the semantic representations of the graph network. 
+
+![image](https://github.com/user-attachments/assets/cc63112b-9749-458a-9c19-586e12ffec99)
 
 
+## Wait....Why would you want to create Node Embeddings?
+* Task is to map graph nodes into an embedding space.
+* Reasoning:
+  1. **Node similarity represented by embeddings == node similarity in a graph network.**
+  	* As an example:
+    	  * Two nodes that are closer to one another connected by an edge **should* be embedded in the same vector space (theoretically). 
+  2. Encoding network information
+  3. Downstream prediction and/or recommendation tasks (see image below from Professor Jure Leskovec's lecture)
+
+![image](https://github.com/user-attachments/assets/fdc9d35f-f481-45a6-a3d9-4065c4ddb5b5)
+
+
+* The original paper on this subject was published by Perozzi et al. in 2014 entitled [DeepWalk: Online Learning of Social Representations](https://arxiv.org/abs/1403.6652)
+  * The example below is an input graph is embedded and the nodes are mapped to a 2-dimensional vector space. 
+
+![image](https://github.com/user-attachments/assets/811cc4a3-8e1f-41e9-baa0-5473b3fe26cc)
+
+## How do you create Node (or Graph) Embeddings?
+* Going back to Graph Representation techniques above, we use an **Adjacency Matrix**.
+* This is depicted as:
+  * V is vertex set
+  * A is adjacency matrix (assumes binary)
+  * No node features or extra information is used (for simplicity this is an undirected graph). See representation below from Professor Jure Leskovec's lecture:
+
+![image](https://github.com/user-attachments/assets/704c6655-05e3-4160-8753-0a40381dbfd3)
+
+* Embedding space should be the similarity (e.g. dot product) of every node encoded.
+
+## How do you define a node similarity function?
+1. An encoder maps nodes to embeddings (low-dimensional vector)
+   * Simplest encoding method: embedding lookup in matrix
+     * Simple Examples: DeepWalk, node2vec
+   * Complex encoder + decoder methods: GNNs are a more complex method to learn node embeddings.
+2. Similarity function defined --> original network relationships mapped to vector space relationships.
+3. Decoder maps embeddings to similarity score.
+4. Final optimization of encoder parameters.
+
+# Node Similarity using Random Walks
+* Random Walks is a common approach to this.
+* Random Walks are **unsupervised/self-supervised** method to learn node embeddings.
+* Important distinctions:
+  1. NO node labels
+  2. NO node features (e.g. attributes)
+  3. Goal is to estimate embedding coordinates of a node so that the input network structure and relationships are preserved.
+* Embeddings are **Task Independent**
+  * There is no specific task the embeddings are trained on, they can be used for any task. 
+
+## Random Walk Notation
+* The standard notation for Random Walks is as follows [Source](https://snap.stanford.edu/class/cs224w-2021/slides/03-nodeemb.pdf)
+
+![image](https://github.com/user-attachments/assets/43e70859-32bb-45e4-a6a8-7e83058f80ba)
+
+* A Random Walk is a sequence of graph points (nodes) visited via random probability then optimization of the resulting embeddings to encode. [Source](https://snap.stanford.edu/class/cs224w-2021/slides/03-nodeemb.pdf)
+
+
+![image](https://github.com/user-attachments/assets/46448a50-b39f-4874-a5cb-f3ac81aaab47)
+
+
+## Why would you use a Random Walk?
+1. **Expressive**
+   * Demonstrates local AND higher-order graph neighborhood information for node similarity.
+   * Math definition: "if a random walk starting from node u visits v with high probability, thus u and v are similar via high-order multi-hop information"
+
+2. **Efficiency**
+   * Eliminates need for having to consider ALL node pairs during training graph representation model.
+   * **ONLY need for considering pairs that co-occur on a random walk**
+
+## Feature Learning Optimization
+* Given node u, we learn feature representations that will be **predictive of nodes within its random walk neighborhood `NR(u)`.**
+* A node can be visited multiple times.
+* Softmax Parameterization
+  * Node v should be most similar to node u out of all nodes n.
+  * Softmax is used to paramterize the exponential dot products.
+ 
+* This can be summarized as follows:
+  1. Run short-fixed length random walks beginning from each node on a graph.
+  2. For each node u we collect NR(u) the multiset of nodes visited on random walks starting from u.
+  3. Optimize node embeddings using Stochastic Gradient Descent algorithm (approximated using negative sampling)
+
+### Negative Sampling
+* Negative Sampling is used as it is a form of Noise Contrastive Estimation (NCE) which approximately maximizes the log probability of the softmax.
+* Random walks are used to generate sequences of nodes that capture the graph's structural information. These sequences are treated like "sentences" in natural language processing. 
+* Skip-gram with Negative Sampling:
+  * The skip-gram model (a component of word2vec) is then used to learn node embeddings.
+  * It predicts the context nodes given a central node. 
+
+* Softmax Normalization:
+  * In the original skip-gram formulation, the probability of a context node is calculated using softmax, which involves summing over all nodes in the graph, making it computationally expensive for large graphs. 
+
+* **Negative Sampling Solution:**
+  * Negative sampling avoids this by sampling a small number of "negative" nodes (nodes not in the context) and only calculating the probability distribution over this subset.
+  * This significantly speeds up the training process. 
+
+* Efficiency and Bias
+  * **We sample k negative nodes each with probability to its degree.**
+  * There are 2 general considerations for k (e.g. number of negative samples):
+    1. Higher k gives more robust estimates
+    2. Higher k leads to higher bias on negative events -- **A k between 5 and 20 is most commonly used**
+
+* Node2vec's Biased Random Walks
+  * Node2vec further optimizes random walks by introducing parameters p and q to control the exploration of the graph, allowing for both local and global exploration. 
+
+* Hub-Aware Methods
+  * Some methods, like HuGE, attempt to improve random walk generation by considering node importance (e.g., degree) to create more informative walks.
+  * Fang et al. 2024. [Distributed Graph Embedding with Information-Oriented Random Walks](https://arxiv.org/pdf/2303.15702#:~:text=These%20graph%20embedding%20algorithms%20are,embeddings%20from%20the%20sampled%20walks.&text=%F0%9D%91%A2%F0%9D%91%97+%F0%9D%91%96%20denotes%20a%20context,with%20negative%20sampling%20%5B34%5D.&text=%2Dall%20strategy%20cannot%20meet%20the,representation%20in%20the%20sampling%20procedure.)
+
+# node2vec
+* Goal is to create embeddings of nodes with similar network neighborhoods close in a feature space.
+* This is a **maximum likelihood optimization problem** which is independent to a downstream prediction task.
+* Flexible notation of network neighborhood NR(u) of node u leads to "richer" node embeddings.
+* Develop a biased 2nd order random walk R to generate the neighborhood network NR(u) of node u.
+* **Key differences between DeepWalk and node2vec**:
+  1. how to define the set of number of neighboring nodes
+  2. how the random walk is defined
+
+## Biased Walks in node2vec
+* The concept is to use "flexible, biased" random walks that alternate between local and global network views.
+* This was first introduced in the Grover and Leskovec paper in 2016, [node2vec: Scalable Feature Learning for Networks](https://cs.stanford.edu/~jure/pubs/node2vec-kdd16.pdf)
+* This is similar to doing BFS and DFS traversal in a graph. We can see this depicted in the figure below from the 2016 paper:
+  1. DFS - entire network exploration
+     * Recall that DFS explores an entire network first going down the left side of a tree then beginning at the last node it left off at and exploring the right side of a tree (consider this similar to a hierarchical tree structure).
+
+![image](https://github.com/user-attachments/assets/6cbcefe9-33b8-4e12-b070-08caef7856a4)
+
+
+  3. BFS - local network exploration
+     * Recall that BFS goes in parallel down both sides of a tree. So it will go out 1 hop left and 1 hop right and proceed in parallel down the hierarchical tree structure.
+
+![image](https://github.com/user-attachments/assets/a0b1ba40-0241-4174-ad8f-cd18172770ac)
+
+ 
+![image](https://github.com/user-attachments/assets/261a5431-e155-4915-9515-d6bbe68d3392)
+
+* A more granular view of DFS vs. BFS in biased walks is seen below as from Professor Jure Leskovec's lecture:
+
+![image](https://github.com/user-attachments/assets/bbaf39e8-c3e6-49d2-b463-41507ebbece6)
+
+
+![image](https://github.com/user-attachments/assets/805a2886-e4e5-4d2c-8f36-b9beac6e1f63)
 
 ---
 # References
@@ -595,3 +751,4 @@ Source: Same as above
 7. [Stanford SNAP - Motifs and Structral Rules in Network](https://snap-stanford.github.io/cs224w-notes/preliminaries/motifs-and-structral-roles_lecture)
 8. [Stanford CS224W Class Notes](https://snap-stanford.github.io/cs224w-notes/)
 9. [Rossi et al. Role Discovery in Networks, 2016](https://arxiv.org/pdf/1405.7134)
+10. Perozzi et al, 2014. [DeepWalk: Online Learning of Social Representations](https://arxiv.org/abs/1403.6652)
