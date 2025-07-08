@@ -725,7 +725,7 @@ features to labels.
 ![image](https://github.com/user-attachments/assets/6cbcefe9-33b8-4e12-b070-08caef7856a4)
 
 
-  3. BFS - local network exploration
+  2. BFS - local network exploration
      * Recall that BFS goes in parallel down both sides of a tree. So it will go out 1 hop left and 1 hop right and proceed in parallel down the hierarchical tree structure.
 
 ![image](https://github.com/user-attachments/assets/a0b1ba40-0241-4174-ad8f-cd18172770ac)
