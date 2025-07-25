@@ -782,7 +782,48 @@ features to labels.
 * [Image sources above](https://snap-stanford.github.io/cs224w-notes/machine-learning-with-networks/node-representation-learning)
 
 ## Approach 3 - Anonymous Walk Embeddings
+* States in anonymous walks will correspond to the index of the first time you visit a node in a random walk.
+* You get essentially a temporal sequence of when the nodes were visited.
+* These are "agnostic" to the identity of the nodes that were visited (e.g. anonymous!)
+* The number of anonymous walks will increase EXPONENTIALLY!
 
+<img width="624" height="618" alt="image" src="https://github.com/user-attachments/assets/80639469-88b6-4854-9a95-dba4a7169e61" />
+
+* Source: [Ivanov et al. 2016](https://arxiv.org/pdf/1805.11921)
+
+### Using Anonymous Walks
+* Simulate anonymous walks.
+* Represent graph as probability distribution of these walks.
+
+### How many walks do you need?
+* Formula: We want distribution to have error of more than epsilon with probability less than delta. 
+
+## Approach 4 - Learn Walk Embeddings
+* Besides representing each walk by a fraction of times it occurs, learn graph embeddings together with all anonymous walk embeddings.
+* If you embed walks --> the next walk can be predicted!
+* Objective: As you sample random walks, the goal is to learn to predict walks that co-occur in a certain window size.
+  * Predict w2 given w1, w3 if delta is 1.
+ 
+## What can you use graph embeddings for?
+1. Clustering/community detection
+2. Node classification
+3. Link prediction
+4. Graph classification
+
+## Summary of Embedding approaches
+1. Encoder-decoder framework
+   * encoder: embedding lookup
+   * decoder: predict score based on embedding to match node similarity
+  
+2. Node similarity measure
+   * biased random walk
+   * examples:
+     * DeepWalk
+     * Node2Vec
+
+3. Extension to Graph Embeddings
+   * Node embedding aggregation
+   * Anonymous walk embeddings
 
 ---
 # References
