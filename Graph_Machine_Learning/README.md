@@ -755,6 +755,34 @@ features to labels.
 
 ![image](https://github.com/user-attachments/assets/ae5db481-149a-4a68-a6d5-83b5d0d4baa9)
 
+---
+# Graph Embeddings
+* Embedding entire graphs!
+* Goal: embed entire subgraph or entire graph `G` into embedding space.
+* Tasks:
+  1. Classification
+  2. Anomaly detection
+ 
+## Approach 1 - Sum/Avg node embeddings
+* Run standard graph embedding technique over subgraph `G`
+* Sum or Average **node embeddings** in the subgraph `G`
+* In plain english: Graph embeddings are equal to the sum or average of the nodes in that graph.
+* Original paper: [Duvenaud et al. 2016](https://arxiv.org/abs/1509.09292) -- classifying molecules based on graph structures.
+
+<img width="714" height="260" alt="image" src="https://github.com/user-attachments/assets/85387270-954f-4d5e-884c-24872ea6b934" />
+
+
+## Approach 2 - "Virtual Node" via node2vec
+* Add a "virtual node" to represent the "subgraph" and run standard embedding technique.
+* In plain english: the "virtual node" represents the embeddings for the graph via the nod2vec algorithm run on the entire graph. 
+* [Li et al. 2016](https://arxiv.org/abs/1511.05493)
+
+<img width="668" height="204" alt="image" src="https://github.com/user-attachments/assets/13503618-cbc4-4fc5-a433-486d43b9384e" />
+
+* [Image sources above](https://snap-stanford.github.io/cs224w-notes/machine-learning-with-networks/node-representation-learning)
+
+## Approach 3 - Anonymous Walk Embeddings
+
 
 ---
 # References
