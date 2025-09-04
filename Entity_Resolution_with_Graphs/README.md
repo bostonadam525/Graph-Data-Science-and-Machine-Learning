@@ -70,11 +70,41 @@ Calculate string similarity with apoc.txt
 
 # Summary 
 - Design a graph data model that shows shared identifiers
-- Standardize data and flag placeholders 
-- Identify candidate entity pairs
-- Calculate a similarity score
-- Record the results of the entity resolution process in the graph 
+- Standardize data and flag placeholders
 
 
+---
+# Entity Resolved Knowledge Graphs - Another Approach 
+1. Node deduplication
+2. Edge deduplication
+3. Semantic Blocking -- group similar pairs/records together
+4. Filtering 
+5. Matching
+6. Clustering
+7. Merging (Canonicalization)
+
+## Simplified Flow 
+1. Entity collection
+2. Blocking
+3. Matching
+4. Clustering
+5. Resolution 
+
+
+## References
+1. Araújo, Tiago Brasileiro, Vasilis Efthymiou, and Kostas Stefanidis. "Fairness and Explanations in Entity Resolution: An Overview." IEEE Access (2025).
+2. Evensen, 2024. Entity Resolution — An Introduction. Retrieved from: https://medium.com/@adev94/entity-resolution-an-introduction-fb2394d9a04e
+3. Jurney, 2025. The Rise of Semantic Entity Resolution. Retrieved from: https://blog.graphlet.ai/the-rise-of-semantic-entity-resolution-45c48d5eb00a
+
+
+---
+# Two-Step Approach
+1. Blocking
+2. Similarity/Matching 
+
+
+
+## References
+1. KEJRIWAL, 2023. NamedEntity Resolution in Personal Knowledge Graphs. arXiv:2307.12173v1 22 Jul 2023. Link: https://arxiv.org/abs/2307.12173
 
 
