@@ -30,4 +30,5 @@
 - Example from pyg: We have an input graph and the computational graph is defined by the node and its connections (neighbors):
 
 <img width="494" height="191" alt="image" src="https://github.com/user-attachments/assets/4817806a-6760-4690-a2d3-240b4d4610ee" />
-[source](https://www.youtube.com/watch?v=JtDgmmQ60x8)
+
+- [source](https://www.youtube.com/watch?v=JtDgmmQ60x8)
