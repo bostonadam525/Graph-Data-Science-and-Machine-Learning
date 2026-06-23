@@ -66,5 +66,10 @@
 
 2. **Inductive Learning:** model is trained on a set of graphs or a subgraph and is then expected to make predictions on new, previously unseen nodes or even entirely new graphs. Thus, an inductive model learns a general function that generates embeddings by mapping a node's local neighborhood structure and features to a vector representation. This function can be applied to any node, old or new. [source](https://apxml.com/courses/introduction-to-graph-neural-networks/chapter-3-foundational-gnn-architectures/inductive-learning-graphsage)
 
-
+### How does inductive learning prevent overfitting on GNNs?
+- Inductive learning prevents GNNs from overfitting by teaching the model to learn generalizable functions of node features and local neighborhood structures, rather than memorizing fixed node positions or global graph layouts.
+- This helps GNNs avoid overfitting in production through a few key mechanisms:
+  - **Topology Independence:** Instead of creating a look-up table of specific node representations, inductive GNNs (like GraphSAGE) train on a parameterized function. The model evaluates how local subgraphs connect, allowing it to extrapolate to entirely unseen nodes, edges, or graphs.
+  - **Feature-Based Mapping:** The model learns to transform node embeddings based on intrinsic attributes (e.g., user profiles, transaction amounts) mixed with their immediate neighbors' attributes, ensuring it can handle new entities that share similar behavioral patterns.
+  - **Neighborhood Sampling:** By aggregating fixed-size samples of neighborhoods during training, the GNN forces robustness against topological variance and prevents the model from relying on the exact global structure of the training data.
 
