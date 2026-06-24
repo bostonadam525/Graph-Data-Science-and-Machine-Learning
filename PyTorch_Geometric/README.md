@@ -74,11 +74,22 @@
   - **Neighborhood Sampling:** By aggregating fixed-size samples of neighborhoods during training, the GNN forces robustness against topological variance and prevents the model from relying on the exact global structure of the training data.
 ---
 # Graph Attention Networks (GAT)
+- A Graph Attention Network (GAT) is a specialized neural network designed to process graph-structured data (like social networks or molecules). Unlike standard graph methods that treat all neighbor nodes equally, GAT uses self-attention to learn which connections are the most important, allowing nodes to weigh their neighbors' influence dynamically.
 - Given a graph as we see below:
   - how much features of node "c" are important to node "i"?
   - Can we learn such importance in an automated manner? (without rule based or strict labeling). YES with GAT!
 
 <img width="502" height="269" alt="image" src="https://github.com/user-attachments/assets/74c08780-8e65-485b-8519-c81075b016df" />
+
+## How GATs work
+- **Attention Coefficients:** For every connection (edge) between nodes, GAT calculates an importance score. This score tells the network how much "attention" a target node should pay to a specific neighbor.
+- **Weighted Aggregation:** When a node updates its own data representation, it combines the features of its neighbors using these learned attention weights.
+- **Multi-Head Attention:** Similar to models like Transformers, GATs use multiple parallel "attention heads" to capture different types of relationships simultaneously, making the network's predictions more robust.
+
+## Why use GAT? 
+- **Flexibility:** It does not require knowing the entire graph structure in advance, making it highly effective for both inductive and transductive tasks (evaluating graphs that were unseen during training).
+- **Interpretability:** By looking at the attention weights, you can easily see which nodes the network focused on to make its predictions.
+- **Efficiency:** The operations are local and parallelizable across neighborhoods, meaning the network scales efficiently without requiring costly matrix operations.
 
 ## Graph Attention Layer
 - INPUT: a set of node features
@@ -86,3 +97,21 @@
 
 1. Apply parameterized linear transformation to every node
 2. Apply self attention mechanism --> specify node j's features to node i
+3. Normalization (softmax for e (i,j))
+4. Attention mechanism -- `a` --> is a single layer feed forward neural network
+5. Use it.....
+6. Multi-head attention --> concatenation, average (on the final prediction layer of the network)
+   - original paper on GAT suggests concatenation on inner layers, average on final layers --> gives more stable results.
+  
+## Pros of GATs
+1. Computationally Efficient
+   - self-attention layers can be parallelized across edges.
+   - output features can be parallelized across nodes.
+
+2. Allows to assign **different importances to nodes** of the same neighborhood.
+3. Applied in a **shared manner** to all edges in the graph --> NOT required to have the **entire graph** beforehand
+4. Works on BOTH:
+   - a) Transductive learning -- accesses the entire graph, can use features of nodes in train and test set
+   - b) Inductive learning --- multiple graphs, learn from a set of graphs, then test network in other unseen graphs.
+
+5. Message passing implementation
