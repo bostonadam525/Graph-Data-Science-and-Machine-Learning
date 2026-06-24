@@ -72,4 +72,17 @@
   - **Topology Independence:** Instead of creating a look-up table of specific node representations, inductive GNNs (like GraphSAGE) train on a parameterized function. The model evaluates how local subgraphs connect, allowing it to extrapolate to entirely unseen nodes, edges, or graphs.
   - **Feature-Based Mapping:** The model learns to transform node embeddings based on intrinsic attributes (e.g., user profiles, transaction amounts) mixed with their immediate neighbors' attributes, ensuring it can handle new entities that share similar behavioral patterns.
   - **Neighborhood Sampling:** By aggregating fixed-size samples of neighborhoods during training, the GNN forces robustness against topological variance and prevents the model from relying on the exact global structure of the training data.
+---
+# Graph Attention Networks (GAT)
+- Given a graph as we see below:
+  - how much features of node "c" are important to node "i"?
+  - Can we learn such importance in an automated manner? (without rule based or strict labeling). YES with GAT!
 
+<img width="502" height="269" alt="image" src="https://github.com/user-attachments/assets/74c08780-8e65-485b-8519-c81075b016df" />
+
+## Graph Attention Layer
+- INPUT: a set of node features
+- OUTPUT: a new set of node features
+
+1. Apply parameterized linear transformation to every node
+2. Apply self attention mechanism --> specify node j's features to node i
