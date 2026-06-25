@@ -115,3 +115,9 @@
    - b) Inductive learning --- multiple graphs, learn from a set of graphs, then test network in other unseen graphs.
 
 5. Message passing implementation
+   - PyG has a base class for MessagePassing.
+   - Functions:
+     - `aggregate` --> aggregates messages from neighbors (sum, max, mean, etc.)
+     - `message` --> constructs node to node messages
+     - `propagate` --> propagates messages 
+     - `update` --> updates node embeddings
