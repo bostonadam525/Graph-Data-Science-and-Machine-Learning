@@ -92,3 +92,80 @@ Perception | Action | Reasoning | Memory
   - This is responsible for managing the complete lifecycle of agent memory.
   - Database layer handles persistent storage, efficient retrieval, and memory operations that enable agents to: learn from interactions and maintain consistent performance across sessions.
 - A database is the **Agentic Memory core**
+
+## Deterministic vs Agent-Triggered
+- Memory operations are based on 2 main things:
+
+1. Deterministic agentic actions
+   - Memory reads/writes that run automatically on a fixed schedule or predefined condition, independent of the agent's judgement. 
+
+2. Agent Triggered
+   - Memory reads/writes that the agent decides to invoke based on its own real-time assessment of needs.
+  
+## What are Memory Units? 
+- A memory unit is the smallest atomic piece of information represented with a minimal set of attributes so it can be captured, retrieved, and updated by a memory-augmented agent.
+
+## What is Context Engineering?
+- This involves optimally selecting and shaping information placed into an LLM context window so it can perform a task reliably -- while explicitly accounting for context window limits and model constraints.
+- What this means for agentic workflows? We may have multiple data sources (e.g. API, database, MCP, tool calls) -- but rather than stuffing it all within the same context window --> we optimally select the context
+- The goal is to maximize the signal to noise ratio of each token in the context window.
+
+## Memory Engineering
+- Disciplined focus on designing, building, and maintaining memory systems for AI agents.
+- It encompasses the storage, retrieval, classification, and lifecycle management of agent memory.
+- This is MEMORY LIFECYCLE MANAGEMENT.
+
+## What is the memory lifecyle? 
+- There are many steps.....
+
+1. Raw data sources
+2. Aggregation + ingestion (collection information from multiple sources --> RAW DATA)
+3. Representation + metadata enrichment (vector embeddings, metadata --> timestamps, intent, semantics, information)
+4. Storage (e.g. databases --> short term, medium term, long term)
+5. Organization of information (Modeling, indexing, relationships --> specify temporal, semantic, and relational indexing)
+6. Retrieval (actionable memory --> e.g. text search, vector similarity, graph traversal)
+7. Retrieved memory and context is sent to the LLM for inference, processing, and reasoning.
+
+- The key: **Continuous Learning Lifecycle** --> memory feeds LLM reasoning and outcomes become new memory components.
+
+<img width="852" height="889" alt="image" src="https://github.com/user-attachments/assets/e8e3d1b4-589c-4053-a28e-da0d6689e349" />
+
+
+---
+# Memory Engineering - Components
+- This is the intersection of different engineering disciplines coming together. 
+1. Database engineering
+   - persistent storage
+   - typed schemas
+   - ACID transactions
+   - multi-store architecture
+2. Agent Engineering
+   - memory lifecycle
+   - write-back loops
+   - memory extraction
+   - autonomous consolidation
+   - context-aware routing
+3. Machine Learning Engineering
+   - embedding models
+   - fine tuning (e.g. SLMs)
+   - model versioning
+   - reranking pipelines
+   - continual learning
+  
+4. Information Retrieval
+   - hybrid search
+   - vector indexes (HNSW, IVF)
+   - relevance ranking
+   - context assembly
+   - query optimization
+
+<img width="849" height="847" alt="image" src="https://github.com/user-attachments/assets/94abb166-e4fa-4192-a352-198294b95842" />
+
+---
+# Memory Aware Agent
+
+
+---
+# References
+1. Agent Memory: Building Memory-Aware Agents: https://www.deeplearning.ai/courses/agent-memory-building-memory-aware-agents
+2. A-MEM: Agentic Memory for LLM Agents: https://arxiv.org/abs/2502.12110
