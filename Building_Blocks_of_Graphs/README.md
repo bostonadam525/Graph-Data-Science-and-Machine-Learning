@@ -9,3 +9,27 @@
  
 
 * This repo contains insights related to this. 
+---
+# RDF 
+
+
+
+---
+# SPARQL
+
+
+
+---
+# OWL
+
+
+---
+# SHACL 
+
+
+---
+# SKOS 
+
+
+--- 
+# Ontology Design
