@@ -23,6 +23,10 @@
 5. DeepMol
    - Python-based machine and deep learning framework for drug discovery.
    - link: https://github.com/BioSystemsUM/DeepMol
+  
+6. XplainMD using GNNs with PrimeKG
+   - blog series: https://medium.com/@fhirshotlearning/xplainmd-a-graph-powered-guide-to-smarter-healthcare-fd5fe22504de
+   - github: https://github.com/amulya-prasad/XplainMD
 
 ---
 # Open Source Projects
