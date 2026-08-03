@@ -12,6 +12,18 @@
    - Original PrimeKG project: https://github.com/mims-harvard/PrimeKG
    - OptimusKG: https://github.com/mims-harvard/OptimusKG
 
+3. PrimeKG Plus
+   - Paper: https://www.biorxiv.org/content/10.64898/2026.07.14.738415v3.full
+   - github repo: https://github.com/DSDD-UCPH/PrimeKG-Plus
+  
+4. PrimeKG-CL - A Continual Graph LearningBenchmark on Evolving Biomedical Knowledge Graphs
+   - Paper: https://arxiv.org/pdf/2605.10529
+   - github repo: https://github.com/yradwan147/primekg-cl-neurips2026
+  
+5. DeepMol
+   - Python-based machine and deep learning framework for drug discovery.
+   - link: https://github.com/BioSystemsUM/DeepMol
+
 ---
 # Open Source Projects
 1. [OpenKnowledgeGraphs](https://openknowledgegraphs.com/)
@@ -32,6 +44,10 @@
 3. [PheMap](https://wei-lab.app.vumc.org/phemap)
 4. [PheCode](https://wei-lab.app.vumc.org/phecode)
 5. [MEDI](https://wei-lab.app.vumc.org/medi)
+6. [OBO - Semantic Engineering of Phenotypes with Ontologies](https://oboacademy.github.io/obook/lesson/phenotype-data/)
+7. Inflammatory Bowel Disease (IBD) Large Language Model (LLM) Patient Structuring Toolkit
+   - Github repo: https://github.com/UoS-HGIG/IBD_LLM
+   - Huggingface: https://huggingface.co/UoS-HGIG/MIMIC
 
 ## Ontologies
 1. UPHENO
