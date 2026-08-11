@@ -48,6 +48,7 @@
 7. [Kumo rfm - NVIDIA](https://docs.nvidia.com/sdgm/rfm/overview)
 8. [GFM-RAG](https://rmanluo.github.io/gfm-rag/latest/)
 9. [PyTorch Tabular](https://pytorch-tabular.readthedocs.io/en/latest/)
+10. [Mamba4Cast](https://github.com/automl/Mamba4Cast)
 
 
 ---
