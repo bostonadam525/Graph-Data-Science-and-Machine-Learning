@@ -35,6 +35,19 @@
 3. [Graphein](https://graphein.ai/index.html)
 4. [Open Targets Gentropy](https://opentargets.org/gentropy/)
 5. [KG-HUB](https://kghub.org/)
+6. [ULTRA: Towards Foundation Models for Knowledge Graph Reasoning](https://github.com/DeepGraphLearning/ULTRA)
+
+---
+# Tabular Graph Data Models
+1. [Tabular Foundation Models](https://tabularfoundationmodels.com/first-look)
+2. [TabPFN](https://github.com/PriorLabs/tabpfn)
+3. [TabICLv2: A state-of-the-art tabular foundation model](https://github.com/soda-inria/tabicl)
+4. [TabFM - Google](https://github.com/google-research/tabfm)
+5. [Microsoft - Tabular In-Context Learning](https://github.com/microsoft/ticl)
+6. [Stanford Relational Transformer](https://github.com/stanford-star/relational-transformer)
+7. [Kumo rfm - NVIDIA](https://docs.nvidia.com/sdgm/rfm/overview)
+8. [GFM-RAG](https://rmanluo.github.io/gfm-rag/latest/)
+9. [PyTorch Tabular](https://pytorch-tabular.readthedocs.io/en/latest/)
 
 
 ---
