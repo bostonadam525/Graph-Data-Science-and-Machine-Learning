@@ -66,6 +66,10 @@
 7. Inflammatory Bowel Disease (IBD) Large Language Model (LLM) Patient Structuring Toolkit
    - Github repo: https://github.com/UoS-HGIG/IBD_LLM
    - Huggingface: https://huggingface.co/UoS-HGIG/MIMIC
+  
+8. [SHEPHERD](https://zitniklab.hms.harvard.edu/projects/SHEPHERD/)
+   - Paper: https://www.medrxiv.org/content/10.1101/2022.12.07.22283238v2.full-text
+   - Github: https://github.com/mims-harvard/SHEPHERD
 
 ## Ontologies
 1. UPHENO
