@@ -2,7 +2,9 @@
 - A repo dedicated to tabular ML and deep learning.
 
 
-
+---
+# TabArena Leaderboard
+1. [Hugging Face - TabArena Leaderboard](https://huggingface.co/spaces/TabArena/leaderboard)
 
 ---
 # Tabular Graph Data Models
