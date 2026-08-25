@@ -101,3 +101,7 @@
 9. [FDA Drug Label](https://healthdata.gov/FDA/FDA-Drug-Label-Data/gu7t-pzek/about_data)
 10. [FDA Purple Book - Licensed Biological Products](https://purplebooksearch.fda.gov/)
 11. [chEMBL](https://www.ebi.ac.uk/chembl/)
+
+---
+## Document Processing 
+1. [Scaling Multimodal Scientific Literature Understanding with NVIDIA Nemotron Parse](https://developer.nvidia.com/case-studies/scientific-literature-ai-nvidia-nemotron#section-tutorials-resources)
